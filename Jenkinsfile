@@ -15,22 +15,35 @@ pipeline {
                 sh 'mvn surefire-report:report'
             }
         }
-  stage('SonarQube analysis') {
+        stage('SonarQube analysis') {
         environment {
               SCANNER_HOME = tool 'sonar-scanner'
         }
             steps {
                 withSonarQubeEnv('sonar-server') {
                 sh '$SCANNER_HOME/bin/sonar-scanner'
-           }
+            }
          }
         }
-stage('SQuality Gate') {
-     steps {
-       timeout(time: 1, unit: 'MINUTES') {
-       waitForQualityGate abortPipeline: true
+        stage('SQuality Gate') {
+             steps {
+                   timeout(time: 1, unit: 'MINUTES') {
+                   waitForQualityGate abortPipeline: true
+                   }
+             }
+        }
+        stage('SQuality Gate') {
+         steps {
+               timeout(time: 1, unit: 'MINUTES') {
+               waitForQualityGate abortPipeline: true
        }
-  }
-}
+      }
     }
+        stage('Publish') {
+         steps {
+                echo "Artifact publish stage"
+               }
+          }
+        }
+}
 }
