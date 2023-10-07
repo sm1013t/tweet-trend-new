@@ -14,21 +14,10 @@ pipeline {
                 sh 'mvn clean test'
             }
         }
-       stage('SonarScan') {
+        stage('SonarScan') {
             steps {
                 echo 'Running Sonar Scan'
             }
         }
     }
-      post{
-        always {
-            echo 'always block'
-        }
-        success {
-            echo 'build succeeded'
-        }
-        failure {
-            echo 'build failed'
-        }
-    }
 }
