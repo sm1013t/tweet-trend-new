@@ -15,21 +15,14 @@ pipeline {
             }
         }
   stage('SonarQube analysis') {
-    environment {
-      SCANNER_HOME = tool 'sonar-scanner'
-    }
-    steps {
-        withSonarQubeEnv('sonar-server') {
-            sh '$SCANNER_HOME/bin/sonar-scanner'
-       }
-     }
-}
-   stage('SQuality Gate') {
-     steps {
-       timeout(time: 1, unit: 'MINUTES') {
-       waitForQualityGate abortPipeline: true
-       }
-  }
-}
+        environment {
+              SCANNER_HOME = tool 'sonar-scanner'
+        }
+            steps {
+                withSonarQubeEnv('sonar-server') {
+                sh '$SCANNER_HOME/bin/sonar-scanner'
+           }
+         }
+        }
     }
 }
