@@ -12,7 +12,7 @@ pipeline {
         stage('UnitTest') {
             steps {
                 echo ' Running Unit Test'
-                sh 'mvn surefile-report:report'
+                sh 'mvn surefire-report:report'
             }
         }
   stage('SonarQube analysis') {
