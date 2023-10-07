@@ -5,13 +5,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo ' Build the source code'
-                sh 'mvn install -DskipTests'
+                // sh 'mvn install -DskipTests'
+                sh 'mvn clean deploy'
             }
         }
         stage('UnitTest') {
             steps {
                 echo ' Running Unit Test'
-                sh 'mvn clean test'
+                sh 'mvn surefile-report:report'
             }
         }
   stage('SonarQube analysis') {
