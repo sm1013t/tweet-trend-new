@@ -14,10 +14,22 @@ pipeline {
                 sh 'mvn clean test'
             }
         }
-        stage('SonarScan') {
-            steps {
-                echo 'Running Sonar Scan'
-            }
-        }
+  stage('SonarQube analysis') {
+    environment {
+      SCANNER_HOME = tool 'Sonar-scanner'
+    }
+    steps {
+        withSonarQubeEnv('sonar-server') {
+            sh '$SCANNER_HOME/bin/sonar-scanner'
+       }
+     }
+}
+   stage('SQuality Gate') {
+     steps {
+       timeout(time: 1, unit: 'MINUTES') {
+       waitForQualityGate abortPipeline: true
+       }
+  }
+}
     }
 }
