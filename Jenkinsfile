@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo ' Build the source code'
                 // sh 'mvn install -DskipTests'
-                sh 'mvn clean deploy'
+                sh 'mvn clean deploy -DskipTests'
             }
         }
         stage('UnitTest') {
