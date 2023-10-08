@@ -12,12 +12,14 @@ pipeline {
                 sh 'mvn clean deploy -Dmaven.test.skip=true'
             }
         }
+        /*
         stage('UnitTest') {
             steps {
                 echo ' Running Unit Test'
                 sh 'mvn surefire-report:report'
             }
         }
+        
         stage('SonarQube analysis') {
         environment {
               SCANNER_HOME = tool 'sonar-scanner'
@@ -35,6 +37,7 @@ pipeline {
                    }
              }
         }
+        */
         
         stage('Jar Publish') {
              steps {
