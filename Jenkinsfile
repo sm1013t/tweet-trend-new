@@ -1,4 +1,6 @@
 def registry = 'https://attorg.jfrog.io/'
+def imageName = 'attorg.jfrog.io/my-docker-repo-docker-local/ttrend'
+def version   = '2.1.2'
 pipeline {
     agent any
 
@@ -59,5 +61,25 @@ pipeline {
             }
                }
           }
+        stage(" Docker Build ") {
+              steps {
+                script {
+                       echo '<--------------- Docker Build Started --------------->'
+                       app = docker.build(imageName+":"+version)
+                       echo '<--------------- Docker Build Ends --------------->'
+                }
+              }
+        }
+        stage (" Docker Publish "){
+            steps {
+                script {
+                   echo '<--------------- Docker Publish Started --------------->'  
+                    docker.withRegistry(registry, 'artifactory_cred'){
+                    app.push()
+                }    
+               echo '<--------------- Docker Publish Ended --------------->'  
+            }
+            }
+        }
 }
 }
