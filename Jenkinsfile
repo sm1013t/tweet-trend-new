@@ -9,17 +9,17 @@ pipeline {
             steps {
                 echo ' Build the source code'
                 // sh 'mvn install -DskipTests'
-                sh 'mvn clean deploy -Dmaven.test.skip=true'
+                //sh 'mvn clean deploy -Dmaven.test.skip=true'
             }
         }
         /*
         stage('UnitTest') {
             steps {
                 echo ' Running Unit Test'
-                sh 'mvn surefire-report:report'
+                //sh 'mvn surefire-report:report'
             }
         }
-        
+     
         stage('SonarQube analysis') {
         environment {
               SCANNER_HOME = tool 'sonar-scanner'
@@ -37,7 +37,7 @@ pipeline {
                    }
              }
         }
-        */
+        
         
         stage('Jar Publish') {
              steps {
@@ -83,6 +83,11 @@ pipeline {
                echo '<--------------- Docker Publish Ended --------------->'  
             }
             }
+        }
+        */
+        stage ("Deploy"){
+            steps {
+                    echo 'Deployment started'                }
         }
 }
 }
